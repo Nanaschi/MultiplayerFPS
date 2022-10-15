@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -56,6 +53,17 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        base.OnCreateRoomFailed(returnCode, message);
+        Debug.LogError(message);
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        print(MethodBase.GetCurrentMethod());
+        OnConnectedToMasterAction?.Invoke();
     }
 }

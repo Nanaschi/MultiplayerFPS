@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UIController
@@ -12,5 +13,8 @@ public class UIController
         }
     }
 
-
+    public void SetText(TextMeshProUGUI textMeshProUGUI, string targetText)
+    {
+        textMeshProUGUI.text = targetText;
+    }
 }

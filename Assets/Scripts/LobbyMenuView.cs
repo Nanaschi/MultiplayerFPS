@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Zenject;
 
@@ -15,6 +16,8 @@ public class LobbyMenuView : MonoBehaviour
     [SerializeField] private Button _quitGame;
     [SerializeField] private Button _createRoomWithName;
     [SerializeField] private TMP_InputField _roomInputField;
+    [SerializeField] private TextMeshProUGUI _roomName;
+    [SerializeField] private Button _leaveRoom;
 
     public TMP_InputField RoomInputField => _roomInputField;
 
@@ -36,9 +39,14 @@ public class LobbyMenuView : MonoBehaviour
         _createRoomWithName.onClick.AddListener(_launcher.CreateRoom);
         Launcher.OnRoomCreated += Loading;
         Launcher.OnJoinedRoomAction += OpenRoomMenu;
+        _leaveRoom.onClick.AddListener(LeaveRoom);
     }
 
-
+    private void LeaveRoom()
+    {
+        _launcher.LeaveRoom();
+        Loading();
+    }
 
 
     private void OnDisable()
@@ -48,11 +56,12 @@ public class LobbyMenuView : MonoBehaviour
         _createRoomWithName.onClick.RemoveListener(_launcher.CreateRoom);
         Launcher.OnRoomCreated -= Loading;
         Launcher.OnJoinedRoomAction -= OpenRoomMenu;
+        _leaveRoom.onClick.RemoveListener(_launcher.LeaveRoom);
     }
 
     private void Loading()
     {
-        _uiController.SelectActiveUI(_loadingMenu, _createRoomMenu);
+        _uiController.SelectActiveUI(_loadingMenu, _createRoomMenu, _roomMenu);
     }
 
 
@@ -69,5 +78,6 @@ public class LobbyMenuView : MonoBehaviour
     private void OpenRoomMenu()
     {
         _uiController.SelectActiveUI(_roomMenu, _loadingMenu);
+        _uiController.SetText(_roomName, _roomInputField.text);
     }
 }

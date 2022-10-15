@@ -251,6 +251,8 @@ MonoBehaviour:
   _quitGame: {fileID: 1270548840}
   _createRoomWithName: {fileID: 1288216010}
   _roomInputField: {fileID: 1200385478}
+  _roomName: {fileID: 1974365170}
+  _leaveRoom: {fileID: 1250383589}
 --- !u!1 &54273959
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lobbyMenuView: {fileID: 876328}
+  _launcher: {fileID: 325416848}
 --- !u!114 &174120792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2064,7 +2067,7 @@ GameObject:
   - component: {fileID: 1250383590}
   - component: {fileID: 1250383589}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: LeaveRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
