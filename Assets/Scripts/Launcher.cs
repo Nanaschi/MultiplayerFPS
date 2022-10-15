@@ -9,6 +9,8 @@ using Zenject;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     public static event Action OnConnectedToMasterAction;
+    public static event Action OnRoomCreated;
+    public static event Action OnJoinedRoomAction;
 
     private void Awake()
     {
@@ -29,5 +31,22 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         print(MethodBase.GetCurrentMethod());
+    }
+
+    public void CreateRoom(string roomName)
+    {
+        if(string.IsNullOrWhiteSpace(roomName)) return;
+        PhotonNetwork.CreateRoom(roomName);
+        OnRoomCreated?.Invoke();
+    }
+
+    public override void OnJoinedRoom()
+    {
+        OnJoinedRoomAction?.Invoke();
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
     }
 }
