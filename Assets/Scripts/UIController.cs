@@ -11,6 +11,6 @@ public class UIController
             rectTransform[i].gameObject.SetActive(i == 0);
         }
     }
-    
-    
+
+
 }

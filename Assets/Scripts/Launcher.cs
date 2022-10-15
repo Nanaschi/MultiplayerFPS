@@ -3,14 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
+    private LobbyMenuView _lobbyMenuView;
     public static event Action OnConnectedToMasterAction;
     public static event Action OnRoomCreated;
     public static event Action OnJoinedRoomAction;
+
+    [Inject]
+    void InitInject(LobbyMenuView lobbyMenuView)
+    {
+        _lobbyMenuView = lobbyMenuView;
+    }
+
 
     private void Awake()
     {
@@ -33,10 +42,10 @@ public class Launcher : MonoBehaviourPunCallbacks
         print(MethodBase.GetCurrentMethod());
     }
 
-    public void CreateRoom(string roomName)
+    public void CreateRoom()
     {
-        if(string.IsNullOrWhiteSpace(roomName)) return;
-        PhotonNetwork.CreateRoom(roomName);
+        if(string.IsNullOrEmpty(_lobbyMenuView.RoomInputField.text)) return;
+        PhotonNetwork.CreateRoom(_lobbyMenuView.RoomInputField.text);
         OnRoomCreated?.Invoke();
     }
 
