@@ -10,15 +10,19 @@ public class LobbyMenuView : MonoBehaviour
 
 
     [Inject]
-
     void InitInject(UIController uiController)
     {
         _uiController = uiController;
     }
-    
+
     private void OnEnable()
     {
-        Launcher.OnConnectedToMasterAction +=SwitchUIElements;
+        Launcher.OnConnectedToMasterAction += SwitchUIElements;
+    }
+    
+    private void OnDisable()
+    {
+        Launcher.OnConnectedToMasterAction -= SwitchUIElements;
     }
 
     private void SwitchUIElements()
@@ -26,13 +30,5 @@ public class LobbyMenuView : MonoBehaviour
         _uiController.SelectActiveUI(_lobbyButtons, _loadingMenu);
     }
 
-    private void SwitchMenu()
-    {
-        throw new NotImplementedException();
-    }
 
-    private void OnDisable()
-    {
-        
-    }
 }
