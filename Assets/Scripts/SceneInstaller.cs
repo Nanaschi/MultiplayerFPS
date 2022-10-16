@@ -12,7 +12,7 @@ public class SceneInstaller : MonoInstaller
 
         print(MethodBase.GetCurrentMethod());
 
-        var uiController = new UIController(_lobbyMenuView);
+        var uiController = new UIController(_lobbyMenuView, _launcher);
         Container.BindInstance(uiController).AsSingle();
         Container.BindInstance(_launcher).AsSingle();
         

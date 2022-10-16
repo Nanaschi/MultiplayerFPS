@@ -5,12 +5,27 @@ using Zenject;
 public class UIController
 {
     private LobbyMenuView _lobbyMenuView;
+    
+    
+    private RectTransform[] _availableRectTransforms;
+    private Launcher _launcher;
 
-    [Inject]
-    public UIController(LobbyMenuView lobbyMenuView)
+    public UIController(LobbyMenuView lobbyMenuView, Launcher launcher)
     {
+        _launcher = launcher;
         _lobbyMenuView = lobbyMenuView;
-        Debug.Log(_lobbyMenuView.gameObject);
+        
+        
+        
+        _availableRectTransforms = new[]
+        {
+            _lobbyMenuView.LoadingMenu,
+            _lobbyMenuView.LobbyButtons,
+            _lobbyMenuView.CreateRoomMenu,
+            _lobbyMenuView.RoomMenu
+        };
+        
+        _lobbyMenuView.CreateRoom1.onClick.AddListener(LaunchRoomMenu);
     }
 
     public bool IsRoomInputFieldFilled =>
@@ -19,6 +34,22 @@ public class UIController
     public string GetRoomInputFieldText =>
         _lobbyMenuView.RoomInputField.text;
     
+    public void LaunchLoading() =>
+        SelectActiveUI(_lobbyMenuView.LoadingMenu, _availableRectTransforms);
+    
+    public void LaunchLobbyButtons() =>
+        SelectActiveUI(_lobbyMenuView.LobbyButtons, _availableRectTransforms);
+    
+
+    public void LaunchRoomMenu() =>
+        SelectActiveUI(_lobbyMenuView.CreateRoomMenu, _availableRectTransforms);
+    
+    
+    public void OpenRoomMenu()
+    {
+        SelectActiveUI(_lobbyMenuView.RoomMenu, _availableRectTransforms);
+        SetText(_lobbyMenuView.RoomName, _lobbyMenuView.RoomInputField.text);
+    }
 
     public void SelectActiveUI(params RectTransform[] rectTransform)
     {

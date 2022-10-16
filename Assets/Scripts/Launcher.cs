@@ -7,7 +7,6 @@ using Zenject;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     private UIController _uiController;
-    public static event Action OnConnectedToMasterAction;
     public static event Action OnRoomCreated;
     public static event Action OnJoinedRoomAction;
 
@@ -29,7 +28,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         print(MethodBase.GetCurrentMethod());
 
-        OnConnectedToMasterAction?.Invoke();
+        _uiController.LaunchLoading();
 
         PhotonNetwork.JoinLobby();
     }
@@ -37,18 +36,19 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         print(MethodBase.GetCurrentMethod());
+        _uiController.LaunchLobbyButtons();
     }
 
     public void CreateRoom()
     {
         if (_uiController.IsRoomInputFieldFilled) return;
         PhotonNetwork.CreateRoom(_uiController.GetRoomInputFieldText);
-        OnRoomCreated?.Invoke();
+        _uiController.LaunchLoading();
     }
 
     public override void OnJoinedRoom()
     {
-        OnJoinedRoomAction?.Invoke();
+        _uiController.OpenRoomMenu();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -64,6 +64,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         print(MethodBase.GetCurrentMethod());
-        OnConnectedToMasterAction?.Invoke();
+        _uiController.LaunchLoading();
     }
 }

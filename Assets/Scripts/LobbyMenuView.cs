@@ -22,6 +22,33 @@ public class LobbyMenuView : MonoBehaviour
 
     
     private RectTransform[] _availableRectTransforms;
+
+    public Launcher Launcher => _launcher;
+
+    public UIController UIController => _uiController;
+
+    public RectTransform[] AvailableRectTransforms => _availableRectTransforms;
+
+    public Button LeaveRoom1 => _leaveRoom;
+
+    public TextMeshProUGUI RoomName => _roomName;
+
+    public Button CreateRoomWithName => _createRoomWithName;
+
+    public Button QuitGame => _quitGame;
+
+    public Button CreateRoom1 => _createRoom;
+
+    public Button FindRoom => _findRoom;
+
+    public RectTransform RoomMenu => _roomMenu;
+
+    public RectTransform CreateRoomMenu => _createRoomMenu;
+
+    public RectTransform LobbyButtons => _lobbyButtons;
+
+    public RectTransform LoadingMenu => _loadingMenu;
+
     public TMP_InputField RoomInputField => _roomInputField;
 
     private UIController _uiController;
@@ -39,8 +66,6 @@ public class LobbyMenuView : MonoBehaviour
 
     private void OnEnable()
     {
-        Launcher.OnConnectedToMasterAction += OpenLobbyButtons;
-        _createRoom.onClick.AddListener(CreateRoom);
         _createRoomWithName.onClick.AddListener(_launcher.CreateRoom);
         Launcher.OnRoomCreated += Loading;
         Launcher.OnJoinedRoomAction += OpenRoomMenu;
@@ -56,8 +81,6 @@ public class LobbyMenuView : MonoBehaviour
 
     private void OnDisable()
     {
-        Launcher.OnConnectedToMasterAction -= OpenLobbyButtons;
-        _createRoom.onClick.RemoveListener(CreateRoom);
         _createRoomWithName.onClick.RemoveListener(_launcher.CreateRoom);
         Launcher.OnRoomCreated -= Loading;
         Launcher.OnJoinedRoomAction -= OpenRoomMenu;
