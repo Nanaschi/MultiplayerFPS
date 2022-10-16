@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using Zenject;
 
@@ -17,8 +19,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        print(MethodBase.GetCurrentMethod());
-
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -27,7 +27,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         print(MethodBase.GetCurrentMethod());
 
         PhotonNetwork.JoinLobby();
-        
+
         _uiController.LaunchLoading();
     }
 
@@ -64,5 +64,21 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         print(MethodBase.GetCurrentMethod());
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            Instantiate(_uiController.GetRoomListItem, _uiController.GetRoomListItemPlaceHolder)
+                .SetRoomsItems(roomList[i]);
+        }
+    }
+
+
+    public void JoinRoom(RoomInfo info)
+    {
+        PhotonNetwork.JoinRoom(info.Name);
+        _uiController.LaunchLoading();
     }
 }
