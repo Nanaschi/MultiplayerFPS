@@ -10,6 +10,7 @@ public class LobbyMenuView : MonoBehaviour
     [SerializeField] private RectTransform _loadingMenu;
     [SerializeField] private RectTransform _lobbyButtons;
     [SerializeField] private RectTransform _createRoomMenu;
+    
     [SerializeField] private RectTransform _roomMenu;
     [SerializeField] private Button _findRoom;
     [SerializeField] private Button _createRoom;
@@ -19,6 +20,8 @@ public class LobbyMenuView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private Button _leaveRoom;
 
+    
+    private RectTransform[] _availableRectTransforms;
     public TMP_InputField RoomInputField => _roomInputField;
 
     private UIController _uiController;
@@ -30,6 +33,8 @@ public class LobbyMenuView : MonoBehaviour
     {
         _launcher = launcher;
         _uiController = uiController;
+        _availableRectTransforms = new[]
+            {_loadingMenu, _lobbyButtons, _createRoomMenu, _roomMenu};
     }
 
     private void OnEnable()
@@ -61,23 +66,23 @@ public class LobbyMenuView : MonoBehaviour
 
     private void Loading()
     {
-        _uiController.SelectActiveUI(_loadingMenu, _createRoomMenu, _roomMenu);
+        _uiController.SelectActiveUI(_loadingMenu, _availableRectTransforms);
     }
 
 
     private void OpenLobbyButtons()
     {
-        _uiController.SelectActiveUI(_lobbyButtons, _loadingMenu);
+        _uiController.SelectActiveUI(_lobbyButtons, _availableRectTransforms);
     }
 
     private void CreateRoom()
     {
-        _uiController.SelectActiveUI(_createRoomMenu, _lobbyButtons);
+        _uiController.SelectActiveUI(_createRoomMenu, _availableRectTransforms);
     }
     
     private void OpenRoomMenu()
     {
-        _uiController.SelectActiveUI(_roomMenu, _loadingMenu);
+        _uiController.SelectActiveUI(_roomMenu, _availableRectTransforms);
         _uiController.SetText(_roomName, _roomInputField.text);
     }
 }
