@@ -25,7 +25,9 @@ public class UIController
             _lobbyMenuView.RoomMenu
         };
         
-        _lobbyMenuView.CreateRoom1.onClick.AddListener(LaunchRoomMenu);
+        _lobbyMenuView.CreateRoom.onClick.AddListener(LaunchCreateRoomMenu);
+        _lobbyMenuView.CreateRoomWithName.onClick.AddListener(launcher.CreateRoom);
+        _lobbyMenuView.LeaveRoom.onClick.AddListener(launcher.LeaveRoom);
     }
 
     public bool IsRoomInputFieldFilled =>
@@ -41,17 +43,18 @@ public class UIController
         SelectActiveUI(_lobbyMenuView.LobbyButtons, _availableRectTransforms);
     
 
-    public void LaunchRoomMenu() =>
+    public void LaunchCreateRoomMenu() =>
         SelectActiveUI(_lobbyMenuView.CreateRoomMenu, _availableRectTransforms);
     
     
     public void OpenRoomMenu()
     {
+        
         SelectActiveUI(_lobbyMenuView.RoomMenu, _availableRectTransforms);
         SetText(_lobbyMenuView.RoomName, _lobbyMenuView.RoomInputField.text);
     }
 
-    public void SelectActiveUI(params RectTransform[] rectTransform)
+    private void SelectActiveUI(params RectTransform[] rectTransform)
     {
         for (int i = 0; i < rectTransform.Length; i++)
         {
@@ -59,7 +62,7 @@ public class UIController
         }
     }
     
-    public void SelectActiveUI(RectTransform rectTransform, RectTransform[] rectTransforms)
+    private void SelectActiveUI(RectTransform rectTransform, RectTransform[] rectTransforms)
     {
         for (int i = 0; i < rectTransforms.Length; i++)
         {
@@ -67,7 +70,7 @@ public class UIController
         }
     }
 
-    public void SetText(TextMeshProUGUI textMeshProUGUI, string targetText)
+    private void SetText(TextMeshProUGUI textMeshProUGUI, string targetText)
     {
         textMeshProUGUI.text = targetText;
     }

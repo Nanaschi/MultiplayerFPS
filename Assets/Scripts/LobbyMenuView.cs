@@ -10,7 +10,7 @@ public class LobbyMenuView : MonoBehaviour
     [SerializeField] private RectTransform _loadingMenu;
     [SerializeField] private RectTransform _lobbyButtons;
     [SerializeField] private RectTransform _createRoomMenu;
-    
+
     [SerializeField] private RectTransform _roomMenu;
     [SerializeField] private Button _findRoom;
     [SerializeField] private Button _createRoom;
@@ -20,16 +20,8 @@ public class LobbyMenuView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private Button _leaveRoom;
 
-    
-    private RectTransform[] _availableRectTransforms;
 
-    public Launcher Launcher => _launcher;
-
-    public UIController UIController => _uiController;
-
-    public RectTransform[] AvailableRectTransforms => _availableRectTransforms;
-
-    public Button LeaveRoom1 => _leaveRoom;
+    public Button LeaveRoom => _leaveRoom;
 
     public TextMeshProUGUI RoomName => _roomName;
 
@@ -37,7 +29,7 @@ public class LobbyMenuView : MonoBehaviour
 
     public Button QuitGame => _quitGame;
 
-    public Button CreateRoom1 => _createRoom;
+    public Button CreateRoom => _createRoom;
 
     public Button FindRoom => _findRoom;
 
@@ -50,62 +42,4 @@ public class LobbyMenuView : MonoBehaviour
     public RectTransform LoadingMenu => _loadingMenu;
 
     public TMP_InputField RoomInputField => _roomInputField;
-
-    private UIController _uiController;
-    private Launcher _launcher;
-
-
-    [Inject]
-    void InitInject(UIController uiController, Launcher launcher)
-    {
-        _launcher = launcher;
-        _uiController = uiController;
-        _availableRectTransforms = new[]
-            {_loadingMenu, _lobbyButtons, _createRoomMenu, _roomMenu};
-    }
-
-    private void OnEnable()
-    {
-        _createRoomWithName.onClick.AddListener(_launcher.CreateRoom);
-        Launcher.OnRoomCreated += Loading;
-        Launcher.OnJoinedRoomAction += OpenRoomMenu;
-        _leaveRoom.onClick.AddListener(LeaveRoom);
-    }
-
-    private void LeaveRoom()
-    {
-        _launcher.LeaveRoom();
-        Loading();
-    }
-
-
-    private void OnDisable()
-    {
-        _createRoomWithName.onClick.RemoveListener(_launcher.CreateRoom);
-        Launcher.OnRoomCreated -= Loading;
-        Launcher.OnJoinedRoomAction -= OpenRoomMenu;
-        _leaveRoom.onClick.RemoveListener(_launcher.LeaveRoom);
-    }
-
-    private void Loading()
-    {
-        _uiController.SelectActiveUI(_loadingMenu, _availableRectTransforms);
-    }
-
-
-    private void OpenLobbyButtons()
-    {
-        _uiController.SelectActiveUI(_lobbyButtons, _availableRectTransforms);
-    }
-
-    private void CreateRoom()
-    {
-        _uiController.SelectActiveUI(_createRoomMenu, _availableRectTransforms);
-    }
-    
-    private void OpenRoomMenu()
-    {
-        _uiController.SelectActiveUI(_roomMenu, _availableRectTransforms);
-        _uiController.SetText(_roomName, _roomInputField.text);
-    }
 }
