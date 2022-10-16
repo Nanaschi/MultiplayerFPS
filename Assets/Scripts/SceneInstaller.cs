@@ -9,10 +9,12 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private Launcher _launcher;
     public override void InstallBindings()
     {
+
         print(MethodBase.GetCurrentMethod());
 
-        Container.BindInstance(_lobbyMenuView).AsSingle();
+        var uiController = new UIController(_lobbyMenuView);
+        Container.BindInstance(uiController).AsSingle();
         Container.BindInstance(_launcher).AsSingle();
-        Container.Bind<UIController>().AsSingle();
+        
     }
 }

@@ -6,17 +6,17 @@ using Zenject;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
-    private LobbyMenuView _lobbyMenuView;
+    private UIController _uiController;
     public static event Action OnConnectedToMasterAction;
     public static event Action OnRoomCreated;
     public static event Action OnJoinedRoomAction;
 
-    [Inject]
-    void InitInject(LobbyMenuView lobbyMenuView)
-    {
-        _lobbyMenuView = lobbyMenuView;
-    }
 
+    [Inject]
+    void InitInject(UIController uiController)
+    {
+        _uiController = uiController;
+    }
 
     private void Awake()
     {
@@ -41,8 +41,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        if(string.IsNullOrWhiteSpace(_lobbyMenuView.RoomInputField.text)) return;
-        PhotonNetwork.CreateRoom(_lobbyMenuView.RoomInputField.text);
+        if (_uiController.IsRoomInputFieldFilled) return;
+        PhotonNetwork.CreateRoom(_uiController.GetRoomInputFieldText);
         OnRoomCreated?.Invoke();
     }
 
