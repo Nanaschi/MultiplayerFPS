@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun.Demo.Cockpit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,16 +20,13 @@ public class LobbyMenuView : MonoBehaviour
     [SerializeField] private TMP_InputField _roomInputField;
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private Button _leaveRoom;
-    [SerializeField] private RoomListItem _roomListItem;
-    [SerializeField] private RectTransform _roomListPlaceHolder;
-    [SerializeField] private RectTransform _roomList;
+    [SerializeField] private FindRoomView _roomListView;
+    
 
-    public RectTransform RoomList => _roomList;
-
-    public RectTransform RoomListPlaceHolder => _roomListPlaceHolder;
-
-    public RoomListItem RoomListItem => _roomListItem;
-
+    public RectTransform RoomList => _roomListView.RoomList;
+    public RoomListItem RoomListItem => _roomListView.RoomListItem;
+    public RectTransform RoomListPlaceHolder => _roomListView.RoomListPlaceHolder;
+    public Button LeaveRoomsList => _roomListView.LeaveRoomsList;
 
     public Button LeaveRoom => _leaveRoom;
 

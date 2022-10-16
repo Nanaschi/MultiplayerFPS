@@ -29,6 +29,7 @@ public class UIController
         _lobbyMenuView.FindRoom.onClick.AddListener(LaunchFindRoom);
         _lobbyMenuView.CreateRoomWithName.onClick.AddListener(launcher.CreateRoom);
         _lobbyMenuView.LeaveRoom.onClick.AddListener(launcher.LeaveRoom);
+        _lobbyMenuView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
     }
 
     private void LaunchFindRoom() =>
