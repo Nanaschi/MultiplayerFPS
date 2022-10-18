@@ -1,5 +1,6 @@
 using System.Reflection;
 using UnityEngine;
+using Views;
 using Zenject;
 
 public class SceneInstaller : MonoInstaller

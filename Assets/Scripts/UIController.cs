@@ -1,7 +1,7 @@
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-using Zenject;
+using Views;
 
 public class UIController
 {
