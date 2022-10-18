@@ -39,8 +39,9 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        print(MethodBase.GetCurrentMethod());
+       
         if (_uiController.IsRoomInputFieldFilled) return;
+        print(MethodBase.GetCurrentMethod());
         PhotonNetwork.CreateRoom(_uiController.GetRoomInputFieldText);
         _uiController.LaunchLoading();
     }
@@ -57,6 +58,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        print(MethodBase.GetCurrentMethod());
         PhotonNetwork.LeaveRoom();
         _uiController.LaunchLoading();
     }
@@ -68,10 +70,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        for (int i = 0; i < roomList.Count; i++)
+        _uiController.DestroyAllRoomListItems();
+        print(MethodBase.GetCurrentMethod());
+        foreach (var room in roomList)
         {
             Instantiate(_uiController.GetRoomListItem, _uiController.GetRoomListItemPlaceHolder)
-                .SetRoomsItems(roomList[i]);
+                .SetRoomsItems(room);
         }
     }
 

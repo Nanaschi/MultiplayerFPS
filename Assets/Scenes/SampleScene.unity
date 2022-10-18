@@ -243,17 +243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3038c78d9604b5247a16d9735b5857da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loadingMenu: {fileID: 1967030632}
-  _lobbyButtons: {fileID: 983898013}
-  _createRoomMenu: {fileID: 637693075}
-  _roomMenu: {fileID: 956041569}
-  _findRoom: {fileID: 130633671}
-  _createRoom: {fileID: 1855734591}
-  _quitGame: {fileID: 1270548840}
-  _createRoomWithName: {fileID: 1288216010}
-  _roomInputField: {fileID: 1200385478}
-  _roomName: {fileID: 1974365170}
-  _leaveRoom: {fileID: 1250383589}
+  _loadingMenuView: {fileID: 1967030633}
+  _lobbyButtonsView: {fileID: 983898015}
+  _createRoomMenuView: {fileID: 637693077}
+  _roomMenuView: {fileID: 956041570}
   _roomListView: {fileID: 1616397425}
 --- !u!1 &54273959
 GameObject:
@@ -475,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e115c8df78d186843b193b1797f26891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lobbyMenuView: {fileID: 876328}
+  globalView: {fileID: 876328}
   _launcher: {fileID: 325416848}
 --- !u!114 &174120792
 MonoBehaviour:
@@ -1075,6 +1068,7 @@ GameObject:
   m_Component:
   - component: {fileID: 637693075}
   - component: {fileID: 637693076}
+  - component: {fileID: 637693077}
   m_Layer: 5
   m_Name: CreateRoomMenu
   m_TagString: Untagged
@@ -1130,6 +1124,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &637693077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637693074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe9337f877e439fac1de01223e1f191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _createRoomMenu: {fileID: 637693075}
+  _createRoomWithName: {fileID: 1288216010}
+  _roomInputField: {fileID: 1200385478}
 --- !u!1 &666611447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,6 +1602,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 956041569}
+  - component: {fileID: 956041570}
   m_Layer: 5
   m_Name: RoomMenu
   m_TagString: Untagged
@@ -1622,6 +1632,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &956041570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956041568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa1e6dc066242e9b9343b41a4420543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roomMenu: {fileID: 956041569}
+  _roomName: {fileID: 1974365170}
+  _leaveRoom: {fileID: 1250383589}
 --- !u!1 &983898012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,6 +1657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 983898013}
   - component: {fileID: 983898014}
+  - component: {fileID: 983898015}
   m_Layer: 5
   m_Name: LobbyButtons
   m_TagString: Untagged
@@ -1688,6 +1714,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &983898015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983898012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da065fd74ec4cc68b27c9bec26133d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _findRoom: {fileID: 130633671}
+  _createRoom: {fileID: 1855734591}
+  _quitGame: {fileID: 1270548840}
+  _lobbyButtons: {fileID: 983898013}
 --- !u!1 &1006087911
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,6 +3282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1967030632}
+  - component: {fileID: 1967030633}
   m_Layer: 5
   m_Name: LoadingMenu
   m_TagString: Untagged
@@ -3268,6 +3311,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1967030633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967030631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a601de75b0432e9cbc7701428b151e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadingMenu: {fileID: 1967030632}
 --- !u!1 &1974365168
 GameObject:
   m_ObjectHideFlags: 0

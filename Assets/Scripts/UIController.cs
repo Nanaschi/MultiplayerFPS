@@ -5,57 +5,60 @@ using Zenject;
 
 public class UIController
 {
-    private LobbyMenuView _lobbyMenuView;
+    private GlobalView _globalView;
 
 
     private RectTransform[] _availableRectTransforms;
     private RoomInfo _roomInfo;
 
-    public UIController(LobbyMenuView lobbyMenuView, Launcher launcher)
+    public UIController(GlobalView globalView, Launcher launcher)
     {
-        _lobbyMenuView = lobbyMenuView;
+        _globalView = globalView;
 
 
         _availableRectTransforms = new[]
         {
-            _lobbyMenuView.LoadingMenu,
-            _lobbyMenuView.LobbyButtons,
-            _lobbyMenuView.CreateRoomMenu,
-            _lobbyMenuView.RoomMenu,
-            _lobbyMenuView.RoomList
+            _globalView.LoadingMenuView.LoadingMenu,
+            _globalView.LobbyButtonsView.LobbyButtons,
+            _globalView.CreateRoomMenuView.CreateRoomMenu,
+            _globalView.RoomMenuView.RoomMenu,
+            _globalView.RoomList
         };
 
-        _lobbyMenuView.CreateRoom.onClick.AddListener(LaunchCreateRoomMenu);
-        _lobbyMenuView.FindRoom.onClick.AddListener(LaunchFindRoom);
-        _lobbyMenuView.CreateRoomWithName.onClick.AddListener(launcher.CreateRoom);
-        _lobbyMenuView.LeaveRoom.onClick.AddListener(launcher.LeaveRoom);
-        _lobbyMenuView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
+        _globalView.LobbyButtonsView.CreateRoom.onClick.AddListener(LaunchCreateRoomMenu);
+        _globalView.LobbyButtonsView.FindRoom.onClick.AddListener(LaunchFindRoom);
+        _globalView.CreateRoomMenuView.CreateRoomWithName.onClick.AddListener(launcher.CreateRoom);
+        _globalView.RoomMenuView.LeaveRoom.onClick.AddListener(launcher.LeaveRoom);
+        _globalView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
     }
 
-    private void LaunchFindRoom() =>
-        SelectActiveUI(_lobbyMenuView.RoomList, _availableRectTransforms);
+    private void LaunchFindRoom()
+    {
+        SelectActiveUI(_globalView.RoomList, _availableRectTransforms);
+    }
+
 
     public bool IsRoomInputFieldFilled =>
-        string.IsNullOrWhiteSpace(_lobbyMenuView.RoomInputField.text);
+        string.IsNullOrWhiteSpace(_globalView.CreateRoomMenuView.RoomInputField.text);
 
     public string GetRoomInputFieldText =>
-        _lobbyMenuView.RoomInputField.text;
+        _globalView.CreateRoomMenuView.RoomInputField.text;
 
     public void LaunchLoading() =>
-        SelectActiveUI(_lobbyMenuView.LoadingMenu, _availableRectTransforms);
+        SelectActiveUI(_globalView.LoadingMenuView.LoadingMenu, _availableRectTransforms);
 
     public void LaunchLobbyButtons() =>
-        SelectActiveUI(_lobbyMenuView.LobbyButtons, _availableRectTransforms);
+        SelectActiveUI(_globalView.LobbyButtonsView.LobbyButtons, _availableRectTransforms);
 
 
     public void LaunchCreateRoomMenu() =>
-        SelectActiveUI(_lobbyMenuView.CreateRoomMenu, _availableRectTransforms);
+        SelectActiveUI(_globalView.CreateRoomMenuView.CreateRoomMenu, _availableRectTransforms);
 
 
     public void OpenRoomMenu()
     {
-        SelectActiveUI(_lobbyMenuView.RoomMenu, _availableRectTransforms);
-        SetText(_lobbyMenuView.RoomName, _lobbyMenuView.RoomInputField.text);
+        SelectActiveUI(_globalView.RoomMenuView.RoomMenu, _availableRectTransforms);
+        SetText(_globalView.RoomMenuView.RoomName, _globalView.CreateRoomMenuView.RoomInputField.text);
     }
 
     private void SelectActiveUI(params RectTransform[] rectTransform)
@@ -79,10 +82,15 @@ public class UIController
         textMeshProUGUI.text = targetText;
     }
 
-    public void CreateRoomItems()
-    {
-    }
 
-    public RoomListItem GetRoomListItem => _lobbyMenuView.RoomListItem;
-    public RectTransform GetRoomListItemPlaceHolder => _lobbyMenuView.RoomListPlaceHolder;
+    public RoomListItem GetRoomListItem => _globalView.RoomListItem;
+    public RectTransform GetRoomListItemPlaceHolder => _globalView.RoomListPlaceHolder;
+
+    public void DestroyAllRoomListItems()
+    {
+        foreach (RectTransform rectTransform in GetRoomListItemPlaceHolder)
+        {
+            Object.Destroy(rectTransform.gameObject);
+        }
+    }
 }
