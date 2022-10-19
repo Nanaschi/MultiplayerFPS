@@ -8,6 +8,10 @@ namespace Views
     {
         [SerializeField] private RectTransform _createRoomMenu;
         [SerializeField] private Button _createRoomWithName;
+        [SerializeField] private Button _leave;
+
+        public Button Leave => _leave;
+
         [SerializeField] private TMP_InputField _roomInputField;
         public Button CreateRoomWithName => _createRoomWithName;
 

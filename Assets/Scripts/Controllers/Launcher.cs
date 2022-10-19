@@ -9,6 +9,7 @@ using Zenject;
 public class Launcher : MonoBehaviourPunCallbacks
 {
     private UIController _uiController;
+    private List<RoomInfo> _roomList;
 
 
     [Inject]
@@ -37,17 +38,17 @@ public class Launcher : MonoBehaviourPunCallbacks
         _uiController.LaunchLobbyButtons();
     }
 
-    public void CreateRoom()
+
+    public override void OnCreatedRoom()
     {
-        if (_uiController.IsRoomInputFieldFilled) return;
         print(MethodBase.GetCurrentMethod());
-        PhotonNetwork.CreateRoom(_uiController.GetRoomInputFieldText);
-        _uiController.LaunchLoading();
+        _uiController.OpenRoomMenuAlt(PhotonNetwork.CurrentRoom.Name);
     }
 
     public override void OnJoinedRoom()
     {
-        _uiController.OpenRoomMenu();
+        print(MethodBase.GetCurrentMethod());
+        _uiController.OpenRoomMenuAlt(PhotonNetwork.CurrentRoom.Name);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -55,35 +56,22 @@ public class Launcher : MonoBehaviourPunCallbacks
         Debug.LogError(message);
     }
 
-    public void LeaveRoom()
-    {
-        print(MethodBase.GetCurrentMethod());
-        _uiController.LaunchLoading();
-        PhotonNetwork.LeaveRoom();
-
-    }
 
     public override void OnLeftRoom()
     {
+        print(MethodBase.GetCurrentMethod());
+        _uiController.DestroyAllRoomListItems();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        _uiController.DestroyAllRoomListItems();
-        print(MethodBase.GetCurrentMethod());
-        foreach (var room in roomList)
-        {
-            Instantiate(_uiController.GetRoomListItem, _uiController.GetRoomListItemPlaceHolder)
-                .SetRoomsItems(room);
-        }
         
-        Debug.LogWarning(roomList.Count);
+        print(MethodBase.GetCurrentMethod());
+        _uiController.DestroyAllRoomListItems();
+        _uiController.InstantiateRooms(roomList);
     }
-
-
-    public void JoinRoom(RoomInfo info)
-    {
-        PhotonNetwork.JoinRoom(info.Name);
-        _uiController.LaunchLoading();
-    }
+    
+    
+    
+    
 }

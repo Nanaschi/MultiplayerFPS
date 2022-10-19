@@ -14,7 +14,7 @@ public class FindRoomView : MonoBehaviour
 
     public RectTransform RoomList => _roomList;
 
-    public RectTransform RoomListPlaceHolder => _roomListPlaceHolder;
+    public Transform RoomListPlaceHolder => _roomListPlaceHolder;
 
     public RoomListItem RoomListItem => _roomListItem;
 }

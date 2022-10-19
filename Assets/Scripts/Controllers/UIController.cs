@@ -1,8 +1,13 @@
+using System.Collections.Generic;
+using System.Reflection;
+using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using Views;
 
+
+//DIVIDE into photon logic and UI
 public class UIController
 {
     private GlobalView _globalView;
@@ -27,8 +32,9 @@ public class UIController
 
         _globalView.LobbyButtonsView.CreateRoom.onClick.AddListener(LaunchCreateRoomMenu);
         _globalView.LobbyButtonsView.FindRoom.onClick.AddListener(LaunchFindRoom);
-        _globalView.CreateRoomMenuView.CreateRoomWithName.onClick.AddListener(launcher.CreateRoom);
-        _globalView.RoomMenuView.LeaveRoom.onClick.AddListener(launcher.LeaveRoom);
+        _globalView.CreateRoomMenuView.CreateRoomWithName.onClick.AddListener(CreateRoom);
+        _globalView.CreateRoomMenuView.Leave.onClick.AddListener(LaunchLobbyButtons);
+        _globalView.RoomMenuView.LeaveRoom.onClick.AddListener(LeaveRoom);
         _globalView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
     }
 
@@ -51,22 +57,21 @@ public class UIController
         SelectActiveUI(_globalView.LobbyButtonsView.LobbyButtons, _availableRectTransforms);
 
 
-    public void LaunchCreateRoomMenu() =>
+    private void LaunchCreateRoomMenu() =>
         SelectActiveUI(_globalView.CreateRoomMenuView.CreateRoomMenu, _availableRectTransforms);
 
 
     public void OpenRoomMenu()
     {
         SelectActiveUI(_globalView.RoomMenuView.RoomMenu, _availableRectTransforms);
-        SetText(_globalView.RoomMenuView.RoomName, _globalView.CreateRoomMenuView.RoomInputField.text);
+        SetText(_globalView.RoomMenuView.RoomName,
+            _globalView.CreateRoomMenuView.RoomInputField.text);
     }
 
-    private void SelectActiveUI(params RectTransform[] rectTransform)
+    public void OpenRoomMenuAlt(string currentRoomName)
     {
-        for (int i = 0; i < rectTransform.Length; i++)
-        {
-            rectTransform[i].gameObject.SetActive(i == 0);
-        }
+        SelectActiveUI(_globalView.RoomMenuView.RoomMenu, _availableRectTransforms);
+        SetText(_globalView.RoomMenuView.RoomName, currentRoomName);
     }
 
     private void SelectActiveUI(RectTransform rectTransform, RectTransform[] rectTransforms)
@@ -83,14 +88,49 @@ public class UIController
     }
 
 
-    public RoomListItem GetRoomListItem => _globalView.RoomListItem;
-    public RectTransform GetRoomListItemPlaceHolder => _globalView.RoomListPlaceHolder;
+    private RoomListItem GetRoomListItem => _globalView.RoomListItem;
+
+    private Transform GetRoomListItemPlaceHolder =>
+        _globalView.FindRoomView.RoomListPlaceHolder;
 
     public void DestroyAllRoomListItems()
     {
-        foreach (RectTransform rectTransform in GetRoomListItemPlaceHolder)
+        foreach (Transform rectTransform in GetRoomListItemPlaceHolder)
         {
             Object.Destroy(rectTransform.gameObject);
         }
+    }
+
+    private void LeaveRoom()
+    {
+        Debug.Log(MethodBase.GetCurrentMethod());
+        LaunchLoading();
+        PhotonNetwork.LeaveRoom();
+    }
+
+    private void CreateRoom()
+    {
+        if (IsRoomInputFieldFilled) return;
+        Debug.Log(MethodBase.GetCurrentMethod());
+        PhotonNetwork.CreateRoom(GetRoomInputFieldText);
+        LaunchLoading();
+    }
+
+    public void InstantiateRooms(List<RoomInfo> roomList)
+    {
+        foreach (RoomInfo room in roomList)
+        {
+            
+                var roomListItem = Object.Instantiate(GetRoomListItem, GetRoomListItemPlaceHolder);
+                roomListItem.SetRoomsItems(room);
+                roomListItem.Button.onClick.AddListener(() => JoinRoom(room));
+        }
+    }
+
+    private void JoinRoom(RoomInfo info)
+    {
+        PhotonNetwork.JoinRoom(info.Name);
+        LaunchLoading();
+        Debug.Log(MethodBase.GetCurrentMethod());
     }
 }
