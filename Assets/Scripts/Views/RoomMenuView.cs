@@ -7,10 +7,17 @@ namespace Views
     public class RoomMenuView : MonoBehaviour
     {
         [SerializeField] private RectTransform _roomMenu;
+        [SerializeField] private RectTransform _playerListPlaceHolder;
 
 
         [SerializeField] private TextMeshProUGUI _roomName;
         [SerializeField] private Button _leaveRoom;
+
+        [SerializeField] private PlayerListItem _playerListItem;
+
+        public PlayerListItem PlayerListItem => _playerListItem;
+
+        public RectTransform PlayerListPlaceHolder => _playerListPlaceHolder;
 
         public Button LeaveRoom => _leaveRoom;
 

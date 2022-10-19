@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -37,19 +38,16 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         print(MethodBase.GetCurrentMethod());
         _uiController.LaunchLobbyButtons();
+
+        PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
     }
 
-
-    public override void OnCreatedRoom()
-    {
-        print(MethodBase.GetCurrentMethod());
-        _uiController.OpenRoomMenuAlt(PhotonNetwork.CurrentRoom.Name);
-    }
 
     public override void OnJoinedRoom()
     {
         print(MethodBase.GetCurrentMethod());
         _uiController.OpenRoomMenuAlt(PhotonNetwork.CurrentRoom.Name);
+        _uiController.InstantiateAllPlayers();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -65,12 +63,12 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        
         print(MethodBase.GetCurrentMethod());
         _uiController.UpdateRoomsList(roomList);
     }
-    
-    
-    
-    
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        _uiController.InstantiatePlayerListItem(newPlayer);
+    }
 }

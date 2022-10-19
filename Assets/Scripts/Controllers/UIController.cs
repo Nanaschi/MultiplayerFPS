@@ -101,6 +101,14 @@ public class UIController
         DestroyAllRoomListItems();
         InstantiateActiveRooms(roomInfos);
     }
+    
+
+    public void InstantiatePlayerListItem(Player player)
+    {
+        Object.Instantiate(_globalView.RoomMenuView.PlayerListItem,
+            _globalView.RoomMenuView.PlayerListPlaceHolder).SetPlayerListItem(player);
+    }
+
 
     private void DestroyAllRoomListItems()
     {
@@ -137,10 +145,23 @@ public class UIController
         }
     }
 
+
+
     private void JoinRoom(RoomInfo info)
     {
         PhotonNetwork.JoinRoom(info.Name);
         LaunchLoading();
-        Debug.Log(MethodBase.GetCurrentMethod());
+
+
+    }
+
+    public void InstantiateAllPlayers()
+    {
+        Player[] playerList = PhotonNetwork.PlayerList;
+
+        foreach (var player in playerList)
+        {
+            InstantiatePlayerListItem(player);
+        }  
     }
 }
