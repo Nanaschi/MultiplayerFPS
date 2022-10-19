@@ -65,10 +65,9 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        var activeRoomList = roomList.Where(room => !room.RemovedFromList);
+        
         print(MethodBase.GetCurrentMethod());
-        _uiController.DestroyAllRoomListItems();
-        _uiController.InstantiateRooms(activeRoomList);
+        _uiController.UpdateRoomsList(roomList);
     }
     
     

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Photon.Pun;
 using Photon.Realtime;
@@ -93,7 +94,15 @@ public class UIController
     private Transform GetRoomListItemPlaceHolder =>
         _globalView.FindRoomView.RoomListPlaceHolder;
 
-    public void DestroyAllRoomListItems()
+
+
+    public void UpdateRoomsList(IEnumerable<RoomInfo> roomInfos)
+    {
+        DestroyAllRoomListItems();
+        InstantiateActiveRooms(roomInfos);
+    }
+
+    private void DestroyAllRoomListItems()
     {
         foreach (Transform rectTransform in GetRoomListItemPlaceHolder)
         {
@@ -116,9 +125,11 @@ public class UIController
         LaunchLoading();
     }
 
-    public void InstantiateRooms(IEnumerable<RoomInfo> roomList)
+    private void InstantiateActiveRooms(IEnumerable<RoomInfo> roomList)
     {
-        foreach (RoomInfo room in roomList)
+        
+        var activeRoomList = roomList.Where(room => !room.RemovedFromList);
+        foreach (RoomInfo room in activeRoomList)
         {
             var roomListItem = Object.Instantiate(GetRoomListItem, GetRoomListItemPlaceHolder);
                 roomListItem.SetRoomsItems(room);
