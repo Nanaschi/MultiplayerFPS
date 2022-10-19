@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Photon.Pun;
 using Photon.Realtime;
@@ -60,15 +61,14 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         print(MethodBase.GetCurrentMethod());
-        _uiController.DestroyAllRoomListItems();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        
+        var activeRoomList = roomList.Where(room => !room.RemovedFromList);
         print(MethodBase.GetCurrentMethod());
         _uiController.DestroyAllRoomListItems();
-        _uiController.InstantiateRooms(roomList);
+        _uiController.InstantiateRooms(activeRoomList);
     }
     
     

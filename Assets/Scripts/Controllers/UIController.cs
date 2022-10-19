@@ -116,12 +116,11 @@ public class UIController
         LaunchLoading();
     }
 
-    public void InstantiateRooms(List<RoomInfo> roomList)
+    public void InstantiateRooms(IEnumerable<RoomInfo> roomList)
     {
         foreach (RoomInfo room in roomList)
         {
-            
-                var roomListItem = Object.Instantiate(GetRoomListItem, GetRoomListItemPlaceHolder);
+            var roomListItem = Object.Instantiate(GetRoomListItem, GetRoomListItemPlaceHolder);
                 roomListItem.SetRoomsItems(room);
                 roomListItem.Button.onClick.AddListener(() => JoinRoom(room));
         }
