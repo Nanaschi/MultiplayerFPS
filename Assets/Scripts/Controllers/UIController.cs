@@ -36,6 +36,7 @@ public class UIController
         _globalView.CreateRoomMenuView.CreateRoomWithName.onClick.AddListener(CreateRoom);
         _globalView.CreateRoomMenuView.Leave.onClick.AddListener(LaunchLobbyButtonsFirstTime);
         _globalView.RoomMenuView.LeaveRoom.onClick.AddListener(LeaveRoom);
+        _globalView.RoomMenuView.StartGame.onClick.AddListener(StartGame);
         _globalView.FindRoomView.LeaveRoom.onClick.AddListener(LeaveRoomList);
     }
 
@@ -89,6 +90,12 @@ public class UIController
     {
         SelectActiveUI(_globalView.RoomMenuView.RoomMenu, _availableRectTransforms);
         SetText(_globalView.RoomMenuView.RoomName, currentRoomName);
+        DisplayGameButtonForMaster();
+    }
+
+    public void DisplayGameButtonForMaster()
+    {
+        _globalView.RoomMenuView.StartGame.gameObject.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     private void SelectActiveUI(RectTransform rectTransform, RectTransform[] rectTransforms)
@@ -134,11 +141,16 @@ public class UIController
         }
     }
 
-    public void LeaveRoom()
+    private void LeaveRoom()
     {
         Debug.Log(MethodBase.GetCurrentMethod());
         LaunchLoading();
         PhotonNetwork.LeaveRoom();
+    }
+
+    private void StartGame()
+    {
+        PhotonNetwork.LoadLevel((int)ScenesEnum.Game);
     }
 
     private void CreateRoom()

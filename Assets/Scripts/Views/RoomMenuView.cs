@@ -12,9 +12,12 @@ namespace Views
 
         [SerializeField] private TextMeshProUGUI _roomName;
         [SerializeField] private Button _leaveRoom;
+        [SerializeField] private Button _startGame;
+
 
         [SerializeField] private PlayerListItem _playerListItem;
 
+        public Button StartGame => _startGame;
         public PlayerListItem PlayerListItem => _playerListItem;
 
         public RectTransform PlayerListPlaceHolder => _playerListPlaceHolder;

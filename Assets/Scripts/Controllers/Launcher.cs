@@ -28,6 +28,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
 
         _uiController.LaunchLoading();
+        PhotonNetwork.AutomaticallySyncScene = true; //syncs all PhotonNetwork.LoadLevel();
     }
 
     public override void OnJoinedLobby()
@@ -41,6 +42,11 @@ public class Launcher : MonoBehaviourPunCallbacks
         print(MethodBase.GetCurrentMethod());
         _uiController.OpenRoomMenu(PhotonNetwork.CurrentRoom.Name);
         _uiController.UpdatePlayerList();
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        _uiController.DisplayGameButtonForMaster();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
