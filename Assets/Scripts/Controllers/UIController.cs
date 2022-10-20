@@ -174,6 +174,7 @@ public class UIController
     {
         foreach (RoomInfo room in roomList)
         {
+            if(room.RemovedFromList) continue;
             var roomListItem = Object.Instantiate(GetRoomListItem, GetRoomListItemPlaceHolder);
             roomListItem.SetRoomsItems(room);
             roomListItem.Button.onClick.AddListener(() => JoinRoom(room));
