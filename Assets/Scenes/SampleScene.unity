@@ -247,7 +247,7 @@ MonoBehaviour:
   _lobbyButtonsView: {fileID: 983898015}
   _createRoomMenuView: {fileID: 637693077}
   _roomMenuView: {fileID: 1215285253}
-  _roomListView: {fileID: 1616397425}
+  _findRoomView: {fileID: 1616397425}
 --- !u!1 &54273959
 GameObject:
   m_ObjectHideFlags: 0

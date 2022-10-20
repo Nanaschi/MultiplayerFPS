@@ -28,7 +28,7 @@ public class UIController
             _globalView.LobbyButtonsView.LobbyButtons,
             _globalView.CreateRoomMenuView.CreateRoomMenu,
             _globalView.RoomMenuView.RoomMenu,
-            _globalView.RoomList
+            _globalView.FindFindRoomView.RoomList
         };
 
         _globalView.LobbyButtonsView.CreateRoom.onClick.AddListener(LaunchCreateRoomMenu);
@@ -36,19 +36,19 @@ public class UIController
         _globalView.CreateRoomMenuView.CreateRoomWithName.onClick.AddListener(CreateRoom);
         _globalView.CreateRoomMenuView.Leave.onClick.AddListener(LaunchLobbyButtons);
         _globalView.RoomMenuView.LeaveRoom.onClick.AddListener(LeaveRoom);
-        _globalView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
+        _globalView.FindFindRoomView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
     }
 
     private void LaunchFindRoom()
     {
-        SelectActiveUI(_globalView.RoomList, _availableRectTransforms);
+        SelectActiveUI(_globalView.FindFindRoomView.RoomList, _availableRectTransforms);
     }
 
 
-    public bool IsRoomInputFieldFilled =>
+    private bool IsRoomInputFieldFilled =>
         string.IsNullOrWhiteSpace(_globalView.CreateRoomMenuView.RoomInputField.text);
 
-    public string GetRoomInputFieldText =>
+    private string GetRoomInputFieldText =>
         _globalView.CreateRoomMenuView.RoomInputField.text;
 
     public void LaunchLoading() =>
@@ -89,10 +89,10 @@ public class UIController
     }
 
 
-    private RoomListItem GetRoomListItem => _globalView.RoomListItem;
+    private RoomListItem GetRoomListItem => _globalView.FindFindRoomView.RoomListItem;
 
     private Transform GetRoomListItemPlaceHolder =>
-        _globalView.FindRoomView.RoomListPlaceHolder;
+        _globalView.FindFindRoomView.RoomListPlaceHolder;
 
 
 

@@ -13,36 +13,15 @@ public class GlobalView : MonoBehaviour
     [SerializeField] private LobbyButtonsView _lobbyButtonsView;
     [SerializeField] private CreateRoomMenuView _createRoomMenuView;
     [SerializeField] private RoomMenuView _roomMenuView;
-    [SerializeField] private FindRoomView _roomListView;
+    [SerializeField] private FindRoomView _findRoomView;
     public RoomMenuView RoomMenuView => _roomMenuView;
 
-    public FindRoomView FindRoomView => _roomListView;
+    public FindRoomView FindFindRoomView => _findRoomView;
 
-    
+
     public CreateRoomMenuView CreateRoomMenuView => _createRoomMenuView;
 
     public LobbyButtonsView LobbyButtonsView => _lobbyButtonsView;
 
     public LoadingMenuView LoadingMenuView => _loadingMenuView;
-
-
-
-
-
-    
-
-    public RectTransform RoomList => _roomListView.RoomList;
-    public RoomListItem RoomListItem => _roomListView.RoomListItem;
-    
-    public Button LeaveRoomsList => _roomListView.LeaveRoomsList;
-
-
-
-   
-
-
-
-  
-
-    
 }
