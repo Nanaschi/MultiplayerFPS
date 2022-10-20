@@ -28,6 +28,7 @@ public class RoomListItem : MonoBehaviour
     {
         _roomInfo = roomInfo;
 
+        gameObject.name = _roomInfo.Name;
         _textMeshProUGUI.text = _roomInfo.Name;
     }
 }

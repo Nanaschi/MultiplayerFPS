@@ -16,7 +16,7 @@ public class GlobalView : MonoBehaviour
     [SerializeField] private FindRoomView _findRoomView;
     public RoomMenuView RoomMenuView => _roomMenuView;
 
-    public FindRoomView FindFindRoomView => _findRoomView;
+    public FindRoomView FindRoomView => _findRoomView;
 
 
     public CreateRoomMenuView CreateRoomMenuView => _createRoomMenuView;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -6,7 +5,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -27,8 +25,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        print(MethodBase.GetCurrentMethod());
-
         PhotonNetwork.JoinLobby();
 
         _uiController.LaunchLoading();
@@ -36,18 +32,15 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        print(MethodBase.GetCurrentMethod());
-        _uiController.LaunchLobbyButtons();
-
-        PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
+        _uiController.LaunchLobbyButtonsFirstTime();
     }
 
 
     public override void OnJoinedRoom()
     {
         print(MethodBase.GetCurrentMethod());
-        _uiController.OpenRoomMenuAlt(PhotonNetwork.CurrentRoom.Name);
-        _uiController.InstantiateAllPlayers();
+        _uiController.OpenRoomMenu(PhotonNetwork.CurrentRoom.Name);
+        _uiController.UpdatePlayerList();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -63,12 +56,23 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        print(MethodBase.GetCurrentMethod());
+
+        var activeRooms = roomList.Where(room => !room.RemovedFromList);
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            print(roomList[i].Name);
+        }
+  
         _uiController.UpdateRoomsList(roomList);
     }
+    
+    
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        print(MethodBase.GetCurrentMethod());
         _uiController.InstantiatePlayerListItem(newPlayer);
     }
+    
+    
 }

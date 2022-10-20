@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System.Reflection;
+using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
@@ -17,14 +18,17 @@ public class PlayerListItem : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        print("it does not go further");
         if (Equals(_player, otherPlayer))
         {
+            print(MethodBase.GetCurrentMethod());
             Destroy(gameObject);
         }
     }
 
     public override void OnLeftRoom()
     {
+        print(MethodBase.GetCurrentMethod());
         Destroy(gameObject);
     }
 }

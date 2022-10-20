@@ -28,20 +28,25 @@ public class UIController
             _globalView.LobbyButtonsView.LobbyButtons,
             _globalView.CreateRoomMenuView.CreateRoomMenu,
             _globalView.RoomMenuView.RoomMenu,
-            _globalView.FindFindRoomView.RoomList
+            _globalView.FindRoomView.RoomList
         };
 
         _globalView.LobbyButtonsView.CreateRoom.onClick.AddListener(LaunchCreateRoomMenu);
         _globalView.LobbyButtonsView.FindRoom.onClick.AddListener(LaunchFindRoom);
         _globalView.CreateRoomMenuView.CreateRoomWithName.onClick.AddListener(CreateRoom);
-        _globalView.CreateRoomMenuView.Leave.onClick.AddListener(LaunchLobbyButtons);
+        _globalView.CreateRoomMenuView.Leave.onClick.AddListener(LaunchLobbyButtonsFirstTime);
         _globalView.RoomMenuView.LeaveRoom.onClick.AddListener(LeaveRoom);
-        _globalView.FindFindRoomView.LeaveRoomsList.onClick.AddListener(LaunchLobbyButtons);
+        _globalView.FindRoomView.LeaveRoom.onClick.AddListener(LeaveRoomList);
+    }
+
+    private void LeaveRoomList()
+    {
+        OpenLobbyButtons();
     }
 
     private void LaunchFindRoom()
     {
-        SelectActiveUI(_globalView.FindFindRoomView.RoomList, _availableRectTransforms);
+        SelectActiveUI(_globalView.FindRoomView.RoomList, _availableRectTransforms);
     }
 
 
@@ -54,12 +59,23 @@ public class UIController
     public void LaunchLoading() =>
         SelectActiveUI(_globalView.LoadingMenuView.LoadingMenu, _availableRectTransforms);
 
-    public void LaunchLobbyButtons() =>
+    public void LaunchLobbyButtonsFirstTime()
+    {
+        OpenLobbyButtons();
+        PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
+    }
+
+    private void OpenLobbyButtons()
+    {
         SelectActiveUI(_globalView.LobbyButtonsView.LobbyButtons, _availableRectTransforms);
+    }
 
 
-    private void LaunchCreateRoomMenu() =>
+    private void LaunchCreateRoomMenu()
+    {
         SelectActiveUI(_globalView.CreateRoomMenuView.CreateRoomMenu, _availableRectTransforms);
+    }
+       
 
 
     public void OpenRoomMenu()
@@ -69,7 +85,7 @@ public class UIController
             _globalView.CreateRoomMenuView.RoomInputField.text);
     }
 
-    public void OpenRoomMenuAlt(string currentRoomName)
+    public void OpenRoomMenu(string currentRoomName)
     {
         SelectActiveUI(_globalView.RoomMenuView.RoomMenu, _availableRectTransforms);
         SetText(_globalView.RoomMenuView.RoomName, currentRoomName);
@@ -89,11 +105,10 @@ public class UIController
     }
 
 
-    private RoomListItem GetRoomListItem => _globalView.FindFindRoomView.RoomListItem;
+    private RoomListItem GetRoomListItem => _globalView.FindRoomView.RoomListItem;
 
     private Transform GetRoomListItemPlaceHolder =>
-        _globalView.FindFindRoomView.RoomListPlaceHolder;
-
+        _globalView.FindRoomView.RoomListPlaceHolder;
 
 
     public void UpdateRoomsList(IEnumerable<RoomInfo> roomInfos)
@@ -101,14 +116,15 @@ public class UIController
         DestroyAllRoomListItems();
         InstantiateActiveRooms(roomInfos);
     }
-    
+
+
+
 
     public void InstantiatePlayerListItem(Player player)
     {
         Object.Instantiate(_globalView.RoomMenuView.PlayerListItem,
             _globalView.RoomMenuView.PlayerListPlaceHolder).SetPlayerListItem(player);
     }
-
 
     private void DestroyAllRoomListItems()
     {
@@ -118,7 +134,7 @@ public class UIController
         }
     }
 
-    private void LeaveRoom()
+    public void LeaveRoom()
     {
         Debug.Log(MethodBase.GetCurrentMethod());
         LaunchLoading();
@@ -129,39 +145,60 @@ public class UIController
     {
         if (IsRoomInputFieldFilled) return;
         Debug.Log(MethodBase.GetCurrentMethod());
-        PhotonNetwork.CreateRoom(GetRoomInputFieldText);
+        PhotonNetwork.CreateRoom(GetRoomInputFieldText, GettingRoomOptions());
         LaunchLoading();
+    }
+
+    private RoomOptions GettingRoomOptions(byte maxPlayers = 4)
+    {
+        RoomOptions options = new RoomOptions
+        {
+            MaxPlayers = maxPlayers
+        };
+        return options;
     }
 
     private void InstantiateActiveRooms(IEnumerable<RoomInfo> roomList)
     {
-        
-        var activeRoomList = roomList.Where(room => !room.RemovedFromList);
-        foreach (RoomInfo room in activeRoomList)
+        foreach (RoomInfo room in roomList)
         {
             var roomListItem = Object.Instantiate(GetRoomListItem, GetRoomListItemPlaceHolder);
-                roomListItem.SetRoomsItems(room);
-                roomListItem.Button.onClick.AddListener(() => JoinRoom(room));
+            roomListItem.SetRoomsItems(room);
+            roomListItem.Button.onClick.AddListener(() => JoinRoom(room));
         }
     }
 
 
-
     private void JoinRoom(RoomInfo info)
     {
+        Debug.Log($"You joined {info.Name}");
         PhotonNetwork.JoinRoom(info.Name);
         LaunchLoading();
-
-
     }
 
-    public void InstantiateAllPlayers()
+
+    public void UpdatePlayerList()
+    {
+        DestroyAllPlayers();
+        InstantiateAllActivePlayers();
+    }
+
+    private void DestroyAllPlayers()
+    {
+        foreach (Transform rectTransform in _globalView.RoomMenuView.PlayerListPlaceHolder)
+        {
+            Object.Destroy(rectTransform.gameObject);
+        }
+    }
+
+    private void InstantiateAllActivePlayers()
     {
         Player[] playerList = PhotonNetwork.PlayerList;
+        var activePlayerList = playerList.Where(player => !player.IsInactive);
 
-        foreach (var player in playerList)
+        foreach (var player in activePlayerList)
         {
             InstantiatePlayerListItem(player);
-        }  
+        }
     }
 }
