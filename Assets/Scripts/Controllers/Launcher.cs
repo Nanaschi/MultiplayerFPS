@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Photon.Pun;
@@ -21,6 +22,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.ConnectUsingSettings();
+
     }
 
     public override void OnConnectedToMaster()
@@ -29,6 +31,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         _uiController.LaunchLoading();
         PhotonNetwork.AutomaticallySyncScene = true; //syncs all PhotonNetwork.LoadLevel();
+
     }
 
     public override void OnJoinedLobby()
