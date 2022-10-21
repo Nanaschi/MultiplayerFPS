@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
         if (!_photonView.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
+            Destroy(_rigidbody);
         }
     }
 
