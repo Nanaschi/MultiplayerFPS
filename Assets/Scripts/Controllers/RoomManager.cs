@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -16,6 +18,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
+        PhotonNetwork.AddCallbackTarget(this);
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
@@ -24,6 +27,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnDisable()
     {
         base.OnDisable();
+        PhotonNetwork.RemoveCallbackTarget(this);
         SceneManager.sceneLoaded -= SceneLoaded;
     }
     
@@ -35,6 +39,5 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 Vector3.zero, Quaternion.identity);
         }
     }
-    
     
 }

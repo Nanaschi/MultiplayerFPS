@@ -39,15 +39,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
         _previousItemIndex = -1;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         _playerGroundCheck.OnGroundStanding += SetGroundedState;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         _playerGroundCheck.OnGroundStanding -= SetGroundedState;
     }
+
 
     private void Start()
     {
@@ -138,8 +141,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void EquipItem(int itemIndex)
     {
+        if (itemIndex == _previousItemIndex) return;
         _itemIndex = itemIndex;
-        if (_itemIndex == _previousItemIndex) return;
+
         _items[_itemIndex].ItemGameObject.SetActive(true);
         if (_previousItemIndex != -1)
         {
@@ -151,18 +155,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (_photonView.IsMine)
         {
             Hashtable hashtable = new Hashtable();
-            hashtable.Add("itemIndex", itemIndex);
+            hashtable.Add("_itemIndex", _itemIndex);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
         }
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        print(MethodBase.GetCurrentMethod());
-        if (!photonView.IsMine)
+        if (!photonView.IsMine && targetPlayer == photonView.Owner)
         {
-            EquipItem((int) changedProps["itemIndex"]);
-            print((int)changedProps["itemIndex"]);
+            EquipItem((int) changedProps["_itemIndex"]);
+            print((int) changedProps["_itemIndex"]);
         }
     }
 }
