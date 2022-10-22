@@ -1,11 +1,14 @@
 using System;
+using System.Reflection;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using Unity.Mathematics;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+
 [RequireComponent(typeof(PhotonView))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private float _mouseSensitivity, _sprintSpeed, _walkSpeed, _jumpForce, _smoothTime;
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
         LookRotation();
 
-        Move(); 
+        Move();
 
         Jump();
 
@@ -73,7 +76,7 @@ public class PlayerController : MonoBehaviour
         SwitchWeapons();
     }
 
-    private void SwitchWeapons() 
+    private void SwitchWeapons()
     {
         for (int i = 0; i < _items.Length; i++)
         {
@@ -86,12 +89,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
         {
-            if(_itemIndex >= _items.Length -1) EquipItem(0);
+            if (_itemIndex >= _items.Length - 1) EquipItem(0);
             else EquipItem(_itemIndex + 1);
         }
         else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
-            if(_itemIndex <=0) EquipItem(_items.Length - 1);
+            if (_itemIndex <= 0) EquipItem(_items.Length - 1);
             else EquipItem(_itemIndex - 1);
         }
     }
@@ -144,5 +147,22 @@ public class PlayerController : MonoBehaviour
         }
 
         _previousItemIndex = _itemIndex;
+
+        if (_photonView.IsMine)
+        {
+            Hashtable hashtable = new Hashtable();
+            hashtable.Add("itemIndex", itemIndex);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        print(MethodBase.GetCurrentMethod());
+        if (!photonView.IsMine)
+        {
+            EquipItem((int) changedProps["itemIndex"]);
+            print((int)changedProps["itemIndex"]);
+        }
     }
 }

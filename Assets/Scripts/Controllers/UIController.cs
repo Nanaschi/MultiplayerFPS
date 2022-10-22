@@ -165,7 +165,8 @@ public class UIController
     {
         RoomOptions options = new RoomOptions
         {
-            MaxPlayers = maxPlayers
+            MaxPlayers = maxPlayers,
+            BroadcastPropsChangeToAll = true
         };
         return options;
     }
