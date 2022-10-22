@@ -65,19 +65,35 @@ public class PlayerController : MonoBehaviour
 
         LookRotation();
 
-        Move();
+        Move(); 
 
         Jump();
 
 
+        SwitchWeapons();
+    }
+
+    private void SwitchWeapons() 
+    {
         for (int i = 0; i < _items.Length; i++)
         {
-            if(Input.GetKeyDown((i+1).ToString()))
+            if (Input.GetKeyDown((i + 1).ToString()))
             {
-                EquipItem(i); break;
+                EquipItem(i);
+                break;
             }
         }
-        
+
+        if (Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+        {
+            if(_itemIndex >= _items.Length -1) EquipItem(0);
+            else EquipItem(_itemIndex + 1);
+        }
+        else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+        {
+            if(_itemIndex <=0) EquipItem(_items.Length - 1);
+            else EquipItem(_itemIndex - 1);
+        }
     }
 
     private void Move()
@@ -88,7 +104,7 @@ public class PlayerController : MonoBehaviour
         _moveAmount = Vector3.SmoothDamp(_moveAmount,
             moveDir * (Input.GetKey(KeyCode.LeftShift) ? _sprintSpeed : _walkSpeed),
             ref _smoothMoveVelocity, _smoothTime);
-        
+
         _rigidbody.MovePosition(_rigidbody.position +
                                 transform.TransformDirection(_moveAmount) * Time.fixedDeltaTime);
     }
@@ -119,9 +135,8 @@ public class PlayerController : MonoBehaviour
 
     void EquipItem(int itemIndex)
     {
-        
         _itemIndex = itemIndex;
-        if(_itemIndex == _previousItemIndex) return;
+        if (_itemIndex == _previousItemIndex) return;
         _items[_itemIndex].ItemGameObject.SetActive(true);
         if (_previousItemIndex != -1)
         {
