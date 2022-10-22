@@ -11,6 +11,15 @@ public class PlayerController : MonoBehaviour
     private float _mouseSensitivity, _sprintSpeed, _walkSpeed, _jumpForce, _smoothTime;
 
     [SerializeField] private GameObject _cameraHolder;
+
+    [SerializeField]
+    private PlayerGroundCheck _playerGroundCheck;
+
+    [SerializeField] private Item[] _items;
+
+    private int _itemIndex;
+    private int _previousItemIndex;
+
     private float _verticalLookRotation;
     private bool _grounded;
     private Vector3 _smoothMoveVelocity;
@@ -19,13 +28,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     private PhotonView _photonView;
 
-    [SerializeField]
-    private PlayerGroundCheck _playerGroundCheck;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
+        _previousItemIndex = -1;
     }
 
     private void OnEnable()
@@ -40,7 +48,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        if (!_photonView.IsMine)
+        if (_photonView.IsMine)
+        {
+            EquipItem(0);
+        }
+        else
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(_rigidbody);
@@ -50,15 +62,22 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_photonView.IsMine) return;
-        
+
         LookRotation();
 
         Move();
 
         Jump();
+
+
+        for (int i = 0; i < _items.Length; i++)
+        {
+            if(Input.GetKeyDown((i+1).ToString()))
+            {
+                EquipItem(i); break;
+            }
+        }
         
-        _rigidbody.MovePosition
-            (_rigidbody.position + transform.TransformDirection(_moveAmount) * Time.fixedDeltaTime);
     }
 
     private void Move()
@@ -69,6 +88,9 @@ public class PlayerController : MonoBehaviour
         _moveAmount = Vector3.SmoothDamp(_moveAmount,
             moveDir * (Input.GetKey(KeyCode.LeftShift) ? _sprintSpeed : _walkSpeed),
             ref _smoothMoveVelocity, _smoothTime);
+        
+        _rigidbody.MovePosition(_rigidbody.position +
+                                transform.TransformDirection(_moveAmount) * Time.fixedDeltaTime);
     }
 
     private void Jump()
@@ -93,5 +115,19 @@ public class PlayerController : MonoBehaviour
         _verticalLookRotation = math.clamp(_verticalLookRotation, -90, 90);
 
         _cameraHolder.transform.localEulerAngles = Vector3.left * _verticalLookRotation;
+    }
+
+    void EquipItem(int itemIndex)
+    {
+        
+        _itemIndex = itemIndex;
+        if(_itemIndex == _previousItemIndex) return;
+        _items[_itemIndex].ItemGameObject.SetActive(true);
+        if (_previousItemIndex != -1)
+        {
+            _items[_previousItemIndex].ItemGameObject.SetActive(false);
+        }
+
+        _previousItemIndex = _itemIndex;
     }
 }
