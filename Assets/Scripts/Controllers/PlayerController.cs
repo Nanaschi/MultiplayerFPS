@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] private Item[] _items;
 
+    [SerializeField] private float _maxHealth;
+    private float _currentHealth;
+
     private int _itemIndex;
     private int _previousItemIndex;
 
@@ -32,12 +35,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     private Rigidbody _rigidbody;
     private PhotonView _photonView;
 
+    private PlayerManager _playerManager;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
+        _playerManager = PhotonView.Find((int) photonView.InstantiationData[0]).GetComponent<PlayerManager>();
+        
         _previousItemIndex = -1;
+        _currentHealth = _maxHealth;
     }
 
     public override void OnEnable()
@@ -70,12 +77,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (!_photonView.IsMine) return;
 
-        LookRotation();
 
         Move();
 
         Jump();
 
+        LookRotation();
 
         SwitchWeapons();
 
@@ -138,6 +145,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * _mouseSensitivity);
 
+
         _verticalLookRotation += Input.GetAxisRaw("Mouse Y") * _mouseSensitivity;
 
         _verticalLookRotation = math.clamp(_verticalLookRotation, -90, 90);
@@ -183,7 +191,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_TakeDamage(float amountOfDamage)
     {
-        if(!_photonView.IsMine) return;
+        if (!_photonView.IsMine) return;
         print($"You took damage {amountOfDamage}");
+
+        _currentHealth -= amountOfDamage;
+        if (_currentHealth <= 0) Die();
+    }
+
+    private void Die()
+    {
+        _playerManager.Die();
     }
 }

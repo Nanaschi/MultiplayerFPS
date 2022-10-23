@@ -9,6 +9,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private PhotonView _photonView;
+    private GameObject _controller;
 
     private void Awake()
     {
@@ -25,7 +26,13 @@ public class PlayerManager : MonoBehaviour
     {
         print(MethodBase.GetCurrentMethod()  + $"{_photonView.InstantiationId}");
         
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"),
-            Vector3.zero, Quaternion.identity);        
+        _controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"),
+            Vector3.zero, Quaternion.identity, 0, new object[]{_photonView.ViewID});        
+    }
+
+    public void Die()
+    {
+        PhotonNetwork.Destroy(_controller);
+        CreateController();
     }
 }
