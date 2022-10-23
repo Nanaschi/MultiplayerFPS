@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   _itemName: Rifle
+  _damageAmount: 50

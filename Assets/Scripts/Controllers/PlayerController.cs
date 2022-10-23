@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using ExitGames.Client.Photon;
+using Interfaces;
 using Photon.Pun;
 using Photon.Realtime;
 using Unity.Mathematics;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(PhotonView))]
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
     [SerializeField]
     private float _mouseSensitivity, _sprintSpeed, _walkSpeed, _jumpForce, _smoothTime;
@@ -172,5 +173,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
             EquipItem((int) changedProps[nameof(_itemIndex)]);
             print((int) changedProps[nameof(_itemIndex)]);
         }
+    }
+
+    public void TakeDamage(float amountOfDamage)
+    {
+        _photonView.RPC(nameof(RPC_TakeDamage), RpcTarget.All, amountOfDamage);
+    }
+
+    [PunRPC]
+    void RPC_TakeDamage(float amountOfDamage)
+    {
+        if(!_photonView.IsMine) return;
+        print($"You took damage {amountOfDamage}");
     }
 }
