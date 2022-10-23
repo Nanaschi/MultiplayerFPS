@@ -77,6 +77,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
         SwitchWeapons();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            _items[_itemIndex].Use();
+        }
     }
 
     private void SwitchWeapons()
@@ -155,7 +160,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (_photonView.IsMine)
         {
             Hashtable hashtable = new Hashtable();
-            hashtable.Add("_itemIndex", _itemIndex);
+            hashtable.Add(nameof(_itemIndex), _itemIndex);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
         }
     }
@@ -164,8 +169,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine && targetPlayer == photonView.Owner)
         {
-            EquipItem((int) changedProps["_itemIndex"]);
-            print((int) changedProps["_itemIndex"]);
+            EquipItem((int) changedProps[nameof(_itemIndex)]);
+            print((int) changedProps[nameof(_itemIndex)]);
         }
     }
 }

@@ -150,9 +150,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 653841282455369356}
-  - component: {fileID: 4051780322725160869}
+  - component: {fileID: 575408042522083661}
   m_Layer: 0
-  m_Name: Gun1
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ Transform:
   m_Father: {fileID: 625212238439331824}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4051780322725160869
+--- !u!114 &575408042522083661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,11 +183,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5268864580248949762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd2670754a4ccaf47900614752fc3667, type: 3}
+  m_Script: {fileID: 11500000, guid: 7690dd55c5fb4857ba3527ccb71b7432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _itemInfo: {fileID: 11400000, guid: 866244d5a9c62e94ebb5c06f19fec493, type: 2}
   _itemGameObject: {fileID: 3784780367239454804}
+  _camera: {fileID: 1430936466400625155}
 --- !u!1 &5422592010074903678
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,9 +349,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9164127172780959215}
-  - component: {fileID: 6709835483415404830}
+  - component: {fileID: 528562392621631051}
   m_Layer: 0
-  m_Name: Gun2
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +373,7 @@ Transform:
   m_Father: {fileID: 625212238439331824}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6709835483415404830
+--- !u!114 &528562392621631051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -381,11 +382,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6612208150693425924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd2670754a4ccaf47900614752fc3667, type: 3}
+  m_Script: {fileID: 11500000, guid: 7690dd55c5fb4857ba3527ccb71b7432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _itemInfo: {fileID: 11400000, guid: 68fee0b8bd7405b4ab10e170b6a84444, type: 2}
   _itemGameObject: {fileID: 8901876409112393947}
+  _camera: {fileID: 1430936466400625155}
 --- !u!1 &7311912917783971755
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,8 +535,8 @@ MonoBehaviour:
   _cameraHolder: {fileID: 7759876571979077677}
   _playerGroundCheck: {fileID: 1827588610209200016}
   _items:
-  - {fileID: 4051780322725160869}
-  - {fileID: 6709835483415404830}
+  - {fileID: 575408042522083661}
+  - {fileID: 528562392621631051}
 --- !u!54 &5465669431592513777
 Rigidbody:
   m_ObjectHideFlags: 0
