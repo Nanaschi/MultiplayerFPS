@@ -3,7 +3,7 @@ using UnityEngine;
 using Views;
 using Zenject;
 
-public class SceneInstaller : MonoInstaller
+public class LaunchSceneInstaller : MonoInstaller
 {
     [SerializeField] private GlobalView globalView;
     [SerializeField] private Launcher _launcher;
