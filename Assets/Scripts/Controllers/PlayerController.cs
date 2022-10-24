@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] private Item[] _items;
 
     [SerializeField] private float _maxHealth;
+
+    [SerializeField] private float _deathYZone;
     private float _currentHealth;
 
     private int _itemIndex;
@@ -37,12 +39,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private PlayerManager _playerManager;
 
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
-        _playerManager = PhotonView.Find((int) photonView.InstantiationData[0]).GetComponent<PlayerManager>();
-        
+        _playerManager = PhotonView.Find((int) photonView.InstantiationData[0])
+            .GetComponent<PlayerManager>();
+
         _previousItemIndex = -1;
         _currentHealth = _maxHealth;
     }
@@ -86,10 +90,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         SwitchWeapons();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetMouseButtonDown(0))
         {
             _items[_itemIndex].Use();
         }
+
+        DeathIfYouFall();
+    }
+
+    private void DeathIfYouFall()
+    {
+        if (transform.position.y < _deathYZone) Die();
     }
 
     private void SwitchWeapons()

@@ -611,7 +611,7 @@ MonoBehaviour:
   _mouseSensitivity: 3
   _sprintSpeed: 6
   _walkSpeed: 3
-  _jumpForce: 300
+  _jumpForce: 100
   _smoothTime: 0.15
   _cameraHolder: {fileID: 7759876571979077677}
   _playerGroundCheck: {fileID: 1827588610209200016}
@@ -619,6 +619,7 @@ MonoBehaviour:
   - {fileID: 575408042522083661}
   - {fileID: 528562392621631051}
   _maxHealth: 100
+  _deathYZone: -10
 --- !u!54 &5465669431592513777
 Rigidbody:
   m_ObjectHideFlags: 0
