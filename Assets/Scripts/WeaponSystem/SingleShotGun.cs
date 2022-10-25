@@ -13,6 +13,7 @@ namespace WeaponSystem
 
 
         private PhotonView _photonView;
+        private const float SecsToDestroyBulletImpact = 10;
         private const float OffsetToAvoidClipping = .001f;
 
         private void Awake()
@@ -45,10 +46,19 @@ namespace WeaponSystem
         [PunRPC]
         void RPC_Shoot(Vector3 hitPosition, Vector3 hitNormal)
         {
-            print(hitPosition);
-            Instantiate(BulletImpactPrefab, hitPosition + hitNormal * OffsetToAvoidClipping,
-                Quaternion.LookRotation(hitNormal, Vector3.up) *
-                BulletImpactPrefab.transform.rotation);
+            Collider[] colliders = Physics.OverlapSphere(hitPosition, .3f);
+            if (colliders.Length != 0)
+            {
+                
+              GameObject bulletImpactObject =  Instantiate
+              (BulletImpactPrefab, hitPosition + hitNormal * OffsetToAvoidClipping,
+                    Quaternion.LookRotation(hitNormal, Vector3.up) *
+                    BulletImpactPrefab.transform.rotation);
+              bulletImpactObject.transform.SetParent(colliders[0].transform);
+              Destroy(bulletImpactObject, SecsToDestroyBulletImpact);
+              print(hitPosition);
+            }
+
         }
     }
 }
