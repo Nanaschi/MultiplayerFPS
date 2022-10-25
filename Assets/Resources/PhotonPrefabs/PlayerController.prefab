@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: 7893747280091827586}
   - component: {fileID: 1547718321994541030}
   - component: {fileID: 1626920351631498365}
-  - component: {fileID: 1273526668084927609}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -174,22 +173,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1273526668084927609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3784780367239454804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &5268864580248949762
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 653841282455369356}
   - component: {fileID: 575408042522083661}
+  - component: {fileID: 8751838907558741970}
   m_Layer: 0
   m_Name: Rifleitem
   m_TagString: Untagged
@@ -238,6 +222,29 @@ MonoBehaviour:
   _itemInfo: {fileID: 11400000, guid: 866244d5a9c62e94ebb5c06f19fec493, type: 2}
   _itemGameObject: {fileID: 2431026618764133687}
   _camera: {fileID: 1430936466400625155}
+--- !u!114 &8751838907558741970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268864580248949762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5422592010074903678
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +353,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -431,8 +438,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9164127172780959215}
   - component: {fileID: 528562392621631051}
+  - component: {fileID: 797177174681758901}
   m_Layer: 0
-  m_Name: Pistol
+  m_Name: PistolItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,6 +477,29 @@ MonoBehaviour:
   _itemInfo: {fileID: 11400000, guid: 68fee0b8bd7405b4ab10e170b6a84444, type: 2}
   _itemGameObject: {fileID: 6230189830867126316}
   _camera: {fileID: 1430936466400625155}
+--- !u!114 &797177174681758901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6612208150693425924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 0}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7311912917783971755
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +727,6 @@ GameObject:
   - component: {fileID: 1650971885695046487}
   - component: {fileID: 8697903579596935893}
   - component: {fileID: 4412622646097574961}
-  - component: {fileID: 5052530088587104586}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -769,19 +799,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5052530088587104586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8901876409112393947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
