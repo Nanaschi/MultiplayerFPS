@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Start()
     {
+        LockCursor();
+
         if (_photonView.IsMine)
         {
             EquipItem(0);
@@ -75,6 +77,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(_rigidbody);
         }
+    }
+
+    private static void LockCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void FixedUpdate()

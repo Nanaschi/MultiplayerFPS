@@ -221,6 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemInfo: {fileID: 11400000, guid: 866244d5a9c62e94ebb5c06f19fec493, type: 2}
   _itemGameObject: {fileID: 2431026618764133687}
+  _bulletImpactPrefab: {fileID: 5533415036041759146, guid: a4da37ce1c419c94fad112636d0fa18f,
+    type: 3}
   _camera: {fileID: 1430936466400625155}
 --- !u!114 &8751838907558741970
 MonoBehaviour:
@@ -240,8 +242,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 0}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -476,6 +477,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemInfo: {fileID: 11400000, guid: 68fee0b8bd7405b4ab10e170b6a84444, type: 2}
   _itemGameObject: {fileID: 6230189830867126316}
+  _bulletImpactPrefab: {fileID: 5533415036041759146, guid: a4da37ce1c419c94fad112636d0fa18f,
+    type: 3}
   _camera: {fileID: 1430936466400625155}
 --- !u!114 &797177174681758901
 MonoBehaviour:
@@ -495,8 +498,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 0}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
